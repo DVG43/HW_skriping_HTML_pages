@@ -46,7 +46,7 @@ for article in articles:
     for hub in hubs:
         if hub in KEYWORDS:
             # print (article)
-            data_ = article.find(clas_="tm-article-snippet__datetime-published").attrs['datetime']
+            data_ = article.find(class_="tm-article-snippet__datetime-published").attrs['datetime']
             href = article.find(class_="tm-article-snippet__hubs-item-link").attrs['href']
             url_ = url + href
             title = article.find('h2').find('span').text
