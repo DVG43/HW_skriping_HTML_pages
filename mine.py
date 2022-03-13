@@ -7,6 +7,7 @@ import requests
 # el = soup.find(id='d_clip_button')
 # ip = el.text
 # print(ip)
+#Вывести в консоль список подходящих статей в формате: <дата> - <заголовок> - <ссылка>.
 
 url = 'https://habr.com/ru/all/page2/'
 
@@ -29,7 +30,7 @@ HEADERS = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.51 Safari/537.36'
 }
 
-
+KEYWORDS = ['дизайн', 'фото', 'web', 'Python *', 'SQL *', 'Java *']
 
 response = requests.get(url, headers=HEADERS)
 response.raise_for_status()
@@ -39,5 +40,18 @@ soup = bs4.BeautifulSoup(text, features='html.parser')
 articles = soup.find_all('article')
 for article in articles:
     hubs = article.find_all(class_='tm-article-snippet__hubs-item')
-    print(hubs)
-    print()
+    hubs = set(hub.text.strip()for hub in hubs)
+    # print(hubs)
+    # print()
+    for hub in hubs:
+        if hub in KEYWORDS:
+            # print (article)
+            data_ = article.find(clas_="tm-article-snippet__datetime-published").attrs['datetime']
+            href = article.find(class_="tm-article-snippet__hubs-item-link").attrs['href']
+            url_ = url + href
+            title = article.find('h2').find('span').text
+            result = f'Статья {data_} - {title} - {url_}'
+            print(result)
+
+#ind(class_="tm-article-snippet__datetime-published")
+
