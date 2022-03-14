@@ -1,13 +1,7 @@
 import bs4
 import requests
+
 #from bs4 import BeautifulSoup
-# ret = requests.get('https://2ip.ru/')
-# print(ret.text)
-# soup = BeautifulSoup(ret.text, 'html.parser')
-# el = soup.find(id='d_clip_button')
-# ip = el.text
-# print(ip)
-#Вывести в консоль список подходящих статей в формате: <дата> - <заголовок> - <ссылка>.
 
 url = 'https://habr.com/ru/all/page2/'
 
@@ -30,7 +24,7 @@ HEADERS = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.51 Safari/537.36'
 }
 
-KEYWORDS = ['дизайн', 'фото', 'web', 'Python *', 'SQL *', 'Java *']
+KEYWORDS = ['дизайн', 'IT-эмиграция', 'web', 'Python *', 'SQL *', 'Java *']
 
 response = requests.get(url, headers=HEADERS)
 response.raise_for_status()
@@ -45,11 +39,11 @@ for article in articles:
     # print()
     for hub in hubs:
         if hub in KEYWORDS:
-            # print (article)
-            data_ = article.find(class_="tm-article-snippet__datetime-published").attrs['datetime']
+            #print (article)
             href = article.find(class_="tm-article-snippet__hubs-item-link").attrs['href']
             url_ = url + href
             title = article.find('h2').find('span').text
+            data_ = article.find(class_="tm-article-snippet__datetime-published").text
             result = f'Статья {data_} - {title} - {url_}'
             print(result)
 
